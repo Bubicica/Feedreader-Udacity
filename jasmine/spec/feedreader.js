@@ -51,7 +51,6 @@ $(function() {
 	describe('The menu', function() {
 	
 		const body = document.querySelector('body');
-		let classes = body.className;
 		
 	    /* A test that ensures the menu element is
          * hidden by default. You'll have to analyze the HTML and
@@ -59,7 +58,7 @@ $(function() {
          * hiding/showing of the menu element.
          */
 		it('is hidden on start', function() {
-			expect(classes).toBe('menu-hidden');
+			expect($("body").hasClass("menu-hidden")).toBe(true);
         });
 
         /* A test that ensures the menu changes
@@ -72,13 +71,11 @@ $(function() {
 			
 			// testing for showing
 			menuLink.click();
-			classes = body.className;
-			expect(classes).toBe('');
-			
+			expect($("body").hasClass("menu-hidden")).toBe(false);
+		
 			// testing for hiding
 			menuLink.click();
-			classes = body.className;
-			expect(classes).toBe('menu-hidden');
+			expect($("body").hasClass("menu-hidden")).toBe(true);
 		});
    
     });
@@ -101,7 +98,10 @@ $(function() {
 		
 		it('are present', function(done){
 			const theFeed = document.querySelector('.feed');
-			expect(theFeed.firstElementChild).not.toBe(null);
+			const firstEle = theFeed.firstElementChild;
+			const firstEntry = firstEle.firstElementChild;
+			const classes = firstEntry.className.split(' ')
+			expect(classes).toContain('entry');
 			done();
 		});
 		
@@ -133,7 +133,7 @@ $(function() {
 		});
 		
 		it('updates', function(done){
-			expect(firstEle).not.toBe(newFirstEle);
+			expect($(firstEle).html()).not.toBe($(newFirstEle).html());
 			done();
 		});
     });
